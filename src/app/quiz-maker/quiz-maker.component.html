@@ -1,0 +1,37 @@
+<section class="container">
+    <h3 class="center">Quiz Maker</h3>
+    <section class="create-quiz center">
+        <div class="select-section">
+            <select id="categorySelect" name="category" [(ngModel)]="selectedCategory" (ngModelChange)="resetQuiz()">
+                <option  [ngValue]="0" >Select Category</option>
+                <option id="category-{{i}}" *ngFor="let cat of categories; index as i" [ngValue]="cat.id">{{cat.name}}</option>
+              </select>
+        </div>
+        <div class="select-section">
+            <select id="difficultySelect" name="difficulty-level" [(ngModel)]="selectedDifficultyLevel" (ngModelChange)="resetQuiz()">
+                <option [ngValue]="''" >Select Difficulty</option>
+                <option id="difficulty-level-{{i}}" *ngFor="let level of difficultyLevels; index as i" [ngValue]="level.value">
+                    {{level.name}}
+                </option>
+              </select>
+        </div>
+        <button id="createBtn" class="btn" [disabled]="!selectedCategory || !selectedDifficultyLevel || quizList.length" (click)="createQuiz()">Create</button>
+    </section>
+</section>
+<section class="center">
+    <section>
+        <ul class="question-list" *ngFor="let item of quizList; trackBy:trackByIndex">
+            <li>
+                <p>{{item.question}}</p>
+                <span *ngFor="let ans of item.answerDisplayed; index as i">
+                    <button class="btn" [ngClass]="{'correct-selected': ans.isSelected }" (click)="selectAnswer(i, ans, item)">
+                        {{ans.answer}}
+                    </button>
+                </span>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <button id="createBtn" class="btn submit-btn" *ngIf="selectedAnswersCounter === questionDisplayCount" (click)="submitQuiz()">Submit</button>
+    </section>
+</section>
