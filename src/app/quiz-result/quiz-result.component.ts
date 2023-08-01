@@ -10,7 +10,7 @@ import { QuizResult } from '../common/models/quiz';
   styleUrls: ['./quiz-result.component.css']
 })
 export class QuizResultComponent implements OnInit {
-  quizList: QuizResult[]  = [];
+  quizList: QuizResult[] = [];
   scored: number = 0
   questionDisplayCount: number = 5
 

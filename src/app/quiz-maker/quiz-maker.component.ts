@@ -22,16 +22,20 @@ export class QuizMakerComponent implements OnInit {
 
 	constructor(private apiService: ApiService, private commonService: CommonService, private router: Router) { 
     this.questionDisplayCount = this.commonService.getQuestionDisplayCount();
+    this.categories = this.commonService.getCategories();
   }
   
   ngOnInit(): void {
-    this.getCategoryList();
+    if(!this.categories.length) {
+      this.getCategoryList();
+    }
   }
 
   getCategoryList() {
     this.apiService.getCategories()
     .subscribe((response: TriviaCategoryResponse) => {
       this.categories = response.trivia_categories;
+      this.commonService.setCategories(this.categories);
     });
   }
 

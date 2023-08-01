@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { QuizResult } from '../models/quiz';
+import { TriviaCategory } from '../models/trivia-category';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { QuizResult } from '../models/quiz';
 export class CommonService {
   questionDisplayCount: number = 5
   quizData: QuizResult[] = [];
+	allCategories: TriviaCategory[] = [];
 
   constructor() { }
 
@@ -20,6 +22,14 @@ export class CommonService {
 
   getQuestionDisplayCount() {
     return this.questionDisplayCount
+  }
+
+  setCategories(categories: TriviaCategory[]) {
+    this.allCategories = categories
+  }
+
+  getCategories() {
+    return this.allCategories;
   }
 
 }
