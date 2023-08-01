@@ -1,9 +1,8 @@
-import { TriviaCategoryResponse } from './common/interface/trivia-category';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
-import { QuizResponse } from './common/interface/quiz';
+import { TriviaCategoryResponse } from './common/models/trivia-category';
+import { QuizResponse } from './common/models/quiz';
 
 @Injectable({
   providedIn: 'root'

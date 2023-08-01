@@ -10,8 +10,8 @@
         <div class="select-section">
             <select id="difficultySelect" name="difficulty-level" [(ngModel)]="selectedDifficultyLevel" (ngModelChange)="resetQuiz()">
                 <option [ngValue]="''" >Select Difficulty</option>
-                <option id="difficulty-level-{{i}}" *ngFor="let level of difficultyLevels; index as i" [ngValue]="level.value">
-                    {{level.name}}
+                <option *ngFor="let level of difficultyLevels | keyvalue : returnZero" [ngValue]="level.value">
+                    {{level.key}}
                 </option>
               </select>
         </div>
@@ -32,6 +32,6 @@
         </ul>
     </section>
     <section>
-        <button id="createBtn" class="btn submit-btn" *ngIf="selectedAnswersCounter === questionDisplayCount" (click)="submitQuiz()">Submit</button>
+        <button id="quizSubmitBtn" class="btn submit-btn" *ngIf="selectedAnswersCounter === questionDisplayCount" (click)="submitQuiz()">Submit</button>
     </section>
 </section>

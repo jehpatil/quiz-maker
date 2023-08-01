@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
-import { CommonService } from '../common/service/common.service';
-import { QuizResult } from '../common/interface/quiz';
+import { CommonService } from '../common/services/common.service';
+import { QuizResult } from '../common/models/quiz';
 
 @Component({
   selector: 'app-quiz-result',
@@ -29,10 +29,10 @@ export class QuizResultComponent implements OnInit {
 
   calculateScore() {
     for(let i=0; i< this.quizList.length; i++) {
-      let question = this.quizList[i];
+      const question = this.quizList[i];
       if(question.answerDisplayed) {
         for(let j=0; j < question.answerDisplayed.length; j++) {
-          let answer = question.answerDisplayed[j];
+          const answer = question.answerDisplayed[j];
           if(answer.isAnswerCorrect) {
             this.scored += 1
           }

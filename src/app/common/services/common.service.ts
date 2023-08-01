@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuizResult } from '../interface/quiz';
+import { QuizResult } from '../models/quiz';
 
 @Injectable({
   providedIn: 'root'
@@ -9,23 +9,6 @@ export class CommonService {
   quizData: QuizResult[] = [];
 
   constructor() { }
-
-  getDifficultiesLevel() {
-    return [
-      {
-        name: "Easy",
-        value: "easy"
-      },
-      {
-        name: "Medium",
-        value: "medium"
-      },
-      {
-        name: "Hard",
-        value: "hard"
-      }
-    ];
-  }
 
   saveQuizData(quiz: QuizResult[]) {
     this.quizData = quiz;
