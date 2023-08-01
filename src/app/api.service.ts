@@ -1,6 +1,9 @@
+import { TriviaCategoryResponse } from './common/interface/trivia-category';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, catchError } from 'rxjs';
+import { Observable } from 'rxjs';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
+import { QuizResponse } from './common/interface/quiz';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +14,13 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCategories() {
-		return this.httpClient.get(this.SERVER_URL + '/api_category.php')
+  getCategories(): Observable<TriviaCategoryResponse>  {
+		return this.httpClient.get<TriviaCategoryResponse>(this.SERVER_URL + '/api_category.php')
   }
  
-  getQuizList(category: number, difficulty: string, amount: number = 5, type: string = 'multiple') {
+  getQuizList(category: number, difficulty: string, amount: number = 5, type: string = 'multiple'): Observable<QuizResponse> {
     let url  = `/api.php?amount=${amount}&type=${type}&category=${category}&difficulty=${difficulty}`
-		return this.httpClient.get(this.SERVER_URL + url)
+		return this.httpClient.get<QuizResponse>(this.SERVER_URL + url)
   }
 
 }

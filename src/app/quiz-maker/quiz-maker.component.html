@@ -1,5 +1,5 @@
 <section class="container">
-    <h3 class="center">Quiz Maker</h3>
+    <h2 class="center">Quiz Maker</h2>
     <section class="create-quiz center">
         <div class="select-section">
             <select id="categorySelect" name="category" [(ngModel)]="selectedCategory" (ngModelChange)="resetQuiz()">
@@ -20,12 +20,12 @@
 </section>
 <section class="center">
     <section>
-        <ul class="question-list" *ngFor="let item of quizList; trackBy:trackByIndex">
+        <ul class="question-list" *ngFor="let quiz of quizList; trackBy:trackByIndex">
             <li>
-                <p>{{item.question}}</p>
-                <span *ngFor="let ans of item.answerDisplayed; index as i">
-                    <button class="btn" [ngClass]="{'correct-selected': ans.isSelected }" (click)="selectAnswer(i, ans, item)">
-                        {{ans.answer}}
+                <p>{{quiz.question}}</p>
+                <span *ngFor="let option of quiz.answerDisplayed; index as i">
+                    <button class="btn" [ngClass]="{'correct-selected': option.isSelected }" (click)="selectAnswer(i, option, quiz)">
+                        {{option.answer}}
                     </button>
                 </span>
             </li>

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { QuizResult } from '../interface/quiz';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
   questionDisplayCount: number = 5
-  quizData: any = [];
+  quizData: QuizResult[] = [];
 
   constructor() { }
 
@@ -26,7 +27,7 @@ export class CommonService {
     ];
   }
 
-  saveQuizData(quiz: any) {
+  saveQuizData(quiz: QuizResult[]) {
     this.quizData = quiz;
   }
 

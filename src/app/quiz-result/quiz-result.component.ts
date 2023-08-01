@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { CommonService } from '../common/service/common.service';
+import { QuizResult } from '../common/interface/quiz';
 
 @Component({
   selector: 'app-quiz-result',
@@ -9,7 +10,7 @@ import { CommonService } from '../common/service/common.service';
   styleUrls: ['./quiz-result.component.css']
 })
 export class QuizResultComponent implements OnInit {
-  quizList: any  = [];
+  quizList: QuizResult[]  = [];
   scored: number = 0
   questionDisplayCount: number = 5
 
@@ -29,10 +30,12 @@ export class QuizResultComponent implements OnInit {
   calculateScore() {
     for(let i=0; i< this.quizList.length; i++) {
       let question = this.quizList[i];
-      for(let j=0; j < question.answerDisplayed.length; j++) {
-        let answer = question.answerDisplayed[j];
-        if(answer.isAnswerCorrect) {
-          this.scored += 1
+      if(question.answerDisplayed) {
+        for(let j=0; j < question.answerDisplayed.length; j++) {
+          let answer = question.answerDisplayed[j];
+          if(answer.isAnswerCorrect) {
+            this.scored += 1
+          }
         }
       }
     }

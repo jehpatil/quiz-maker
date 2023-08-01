@@ -2,32 +2,31 @@ import { CommonService } from './../common/service/common.service';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { DifficultyLevels, TriviaCategoryResponse, TriviaCategory } from '../common/interface/trivia-category';
+import { QuizAnswer, QuizResponse, QuizResult } from '../common/interface/quiz';
 
 @Component({
   selector: 'app-quiz-maker',
   templateUrl: './quiz-maker.component.html',
   styleUrls: ['./quiz-maker.component.css']
 })
-export class QuizMakerComponent implements OnInit {
-	categories: any = [];
-	difficultyLevels: any = [];
+export class QuizMakerComponent {
+	categories: TriviaCategory[] = []
+	difficultyLevels: DifficultyLevels[] = [];
   selectedCategory: number = 0;
   selectedDifficultyLevel: string = ""
-  quizList: any  = [];
+  quizList: QuizResult[]  = [];
   questionDisplayCount: number = 5
   selectedAnswersCounter: number = 0;
 	constructor(private apiService: ApiService, private commonService: CommonService, private router: Router) { 
     this.questionDisplayCount = this.commonService.getQuestionDisplayCount();
     this.difficultyLevels = this.commonService.getDifficultiesLevel();
-  }
-
-  ngOnInit() {
     this.getCategoryList();
   }
 
   getCategoryList() {
     this.apiService.getCategories()
-    .subscribe((response: any) => {
+    .subscribe((response: TriviaCategoryResponse) => {
       this.categories = response.trivia_categories;
     });
   }
@@ -39,16 +38,16 @@ export class QuizMakerComponent implements OnInit {
   
   createQuiz() {
     this.apiService.getQuizList(this.selectedCategory, this.selectedDifficultyLevel, this.questionDisplayCount)
-    .subscribe((response: any) => {
-      this.quizList = response.results.map((item: object)=>{
-        return this.createAnswerList(item);
+    .subscribe((response: QuizResponse) => {
+      this.quizList = response.results.map((question: QuizResult)=>{
+        return this.createAnswerList(question);
       });
     });
   }
   
-  createAnswerList(question: any) {
+  createAnswerList(question: QuizResult) {
     let displayAnswers = question.incorrect_answers;
-    let randomIndex = Math.floor(3 * Math.random()); // get random index to insert 
+    const randomIndex = Math.floor(3 * Math.random()); // get random index to insert 
     displayAnswers.splice(randomIndex, 0, question.correct_answer); // inserted on radom index
     question.answerDisplayed = [];
     for(let i=0; i < displayAnswers.length; i++) {
@@ -57,18 +56,18 @@ export class QuizMakerComponent implements OnInit {
     return question
   }
   
-  selectAnswer(index: number, ans: any, item: any) {
-    if(!ans.isSelected) {
-      if(item.selectedAnswerIndex != undefined) { // reset previous selected flags
-        item.answerDisplayed[item.selectedAnswerIndex].isSelected = false
+  selectAnswer(index: number, option: QuizAnswer, question: QuizResult) {
+    if(!option.isSelected) {
+      if(question.selectedAnswerIndex != undefined && question.answerDisplayed) { // reset previous selected flags
+        question.answerDisplayed[question.selectedAnswerIndex].isSelected = false
       } else {
         if(this.selectedAnswersCounter < this.questionDisplayCount) {
           this.selectedAnswersCounter += 1
         }
       }
-      ans.isAnswerCorrect = ans.answer === item.correct_answer ?  true : false;
-      ans.isSelected = true;
-      item.selectedAnswerIndex = index
+      option.isAnswerCorrect = option.answer === question.correct_answer ?  true : false;
+      option.isSelected = true;
+      question.selectedAnswerIndex = index;
     }
   }
   
