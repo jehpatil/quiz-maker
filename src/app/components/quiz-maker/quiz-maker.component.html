@@ -22,11 +22,9 @@
     <section>
         <ul class="question-list" *ngFor="let quiz of quizList; trackBy:trackByIndex">
             <li>
-                <p>{{quiz.question}}</p>
+                <p [innerHtml]="quiz.question"></p>
                 <span *ngFor="let option of quiz.answerDisplayed; index as i">
-                    <button class="btn" [ngClass]="{'correct-selected': option.isSelected }" (click)="selectAnswer(i, option, quiz)">
-                        {{option.answer}}
-                    </button>
+                    <button class="btn" [ngClass]="{'correct-selected': option.isSelected }" (click)="selectAnswer(i, option, quiz)" [innerHtml]="option.answer"></button>
                 </span>
             </li>
         </ul>

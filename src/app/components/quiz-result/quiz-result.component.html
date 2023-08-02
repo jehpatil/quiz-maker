@@ -3,11 +3,9 @@
     <section>
         <ul class="question-list" *ngFor="let quiz of quizList; trackBy:trackByIndex">
             <li>
-                <p>{{quiz.question}}</p>
+                <p [innerHTML]="quiz.question"></p>
                 <span *ngFor="let item of quiz.answerDisplayed">
-                    <button class="btn" [ngClass]="{'correct-selected': (item.answer === quiz.correct_answer), 'incorrect-selected': (item.isSelected && !item.isAnswerCorrect) }">
-                        {{item.answer}}
-                    </button>
+                    <button class="btn" [ngClass]="{'correct-selected': (item.answer === quiz.correct_answer), 'incorrect-selected': (item.isSelected && !item.isAnswerCorrect) }" [innerHTML]="item.answer"></button>
                 </span>
             </li>
         </ul>
