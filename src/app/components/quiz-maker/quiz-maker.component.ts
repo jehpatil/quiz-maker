@@ -1,10 +1,10 @@
-import { CommonService } from './../common/services/common.service';
+import { CommonService } from '../../services/common.service';
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
+import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
-import { TriviaCategoryResponse, TriviaCategory } from '../common/models/trivia-category';
-import { QuizAnswer, QuizResponse, QuizResult } from '../common/models/quiz';
-import { Difficulty } from '../common/models/difficulty-level';
+import { TriviaCategoryResponse, TriviaCategory } from '../../models/trivia-category';
+import { QuizAnswer, QuizResponse, QuizResult } from '../../models/quiz';
+import { Difficulty } from '../../models/difficulty-level';
 
 @Component({
   selector: 'app-quiz-maker',
@@ -84,7 +84,7 @@ export class QuizMakerComponent implements OnInit {
   
   submitQuiz() {
     this.commonService.saveQuizData(this.quizList);
-    this.router.navigate(['/quiz-result']);
+    this.router.navigate(['/result']);
   }
 
   trackByIndex(index: number, question: QuizResult) {

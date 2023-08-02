@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
-import { CommonService } from '../common/services/common.service';
-import { QuizResult } from '../common/models/quiz';
+import { ApiService } from '../../services/api.service';
+import { CommonService } from '../../services/common.service';
+import { QuizResult } from '../../models/quiz';
 
 @Component({
   selector: 'app-quiz-result',
@@ -23,7 +23,7 @@ export class QuizResultComponent implements OnInit {
     if(this.quizList.length) {
       this.calculateScore();
     } else {
-      this.router.navigate(['/quiz-maker']);
+      this.router.navigate(['/create']);
     }
   }
 
