@@ -1,12 +1,12 @@
 <section class="center">
     <h2>Quiz Result</h2>
     <section>
-        <ul class="question-list" *ngFor="let item of quizList; trackBy:trackByIndex">
+        <ul class="question-list" *ngFor="let quiz of quizList; trackBy:trackByIndex">
             <li>
-                <p>{{item.question}}</p>
-                <span *ngFor="let ans of item.answerDisplayed">
-                    <button class="btn" [ngClass]="{'correct-selected': (ans.answer === item.correct_answer), 'incorrect-selected': (ans.isSelected && !ans.isAnswerCorrect) }">
-                        {{ans.answer}}
+                <p>{{quiz.question}}</p>
+                <span *ngFor="let item of quiz.answerDisplayed">
+                    <button class="btn" [ngClass]="{'correct-selected': (item.answer === quiz.correct_answer), 'incorrect-selected': (item.isSelected && !item.isAnswerCorrect) }">
+                        {{item.answer}}
                     </button>
                 </span>
             </li>
@@ -16,6 +16,6 @@
         <div class="quiz-score" [ngStyle]="{backgroundColor: setScoredColor()}"> You Scored {{scored}} out of {{questionDisplayCount}}.</div>
     </section>
     <section>
-        <a class="new-quiz" routerLink="/quiz-maker"> Create a new Quiz</a>
+        <a class="new-quiz" routerLink="/create"> Create a new Quiz</a>
     </section>
 </section>

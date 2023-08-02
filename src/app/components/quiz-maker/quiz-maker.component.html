@@ -2,20 +2,20 @@
     <h2 class="center">Quiz Maker</h2>
     <section class="create-quiz center">
         <div class="select-section">
-            <select id="categorySelect" name="category" [(ngModel)]="selectedCategory" (ngModelChange)="resetQuiz()">
+            <select id="categorySelect" name="category" [(ngModel)]="selectedCategory" (ngModelChange)="dropdownUpdated()">
                 <option  [ngValue]="0" >Select Category</option>
                 <option id="category-{{i}}" *ngFor="let cat of categories; index as i" [ngValue]="cat.id">{{cat.name}}</option>
               </select>
         </div>
         <div class="select-section">
-            <select id="difficultySelect" name="difficulty-level" [(ngModel)]="selectedDifficultyLevel" (ngModelChange)="resetQuiz()">
+            <select id="difficultySelect" name="difficulty-level" [(ngModel)]="selectedDifficultyLevel" (ngModelChange)="dropdownUpdated()">
                 <option [ngValue]="''" >Select Difficulty</option>
                 <option *ngFor="let level of difficultyLevels | keyvalue : returnZero" [ngValue]="level.value">
                     {{level.key}}
                 </option>
               </select>
         </div>
-        <button id="createBtn" class="btn" [disabled]="!selectedCategory || !selectedDifficultyLevel || quizList.length" (click)="createQuiz()">Create</button>
+        <button id="createBtn" class="btn" [disabled]="disabledQuizCreateBtn" (click)="createQuiz()">Create</button>
     </section>
 </section>
 <section class="center">

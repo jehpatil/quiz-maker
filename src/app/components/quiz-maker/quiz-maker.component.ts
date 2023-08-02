@@ -18,7 +18,8 @@ export class QuizMakerComponent implements OnInit {
   selectedDifficultyLevel: string = ""
   selectedCategory: number = 0;
   selectedAnswersCounter: number = 0;
-  questionDisplayCount: number = 5
+  questionDisplayCount: number = 5;
+  disabledQuizCreateBtn: boolean = true;
 
 	constructor(private apiService: ApiService, private commonService: CommonService, private router: Router) { 
     this.questionDisplayCount = this.commonService.getQuestionDisplayCount();
@@ -39,12 +40,20 @@ export class QuizMakerComponent implements OnInit {
     });
   }
 
+  dropdownUpdated() {
+    if (this.selectedCategory && this.selectedDifficultyLevel) {
+      this.disabledQuizCreateBtn = false;
+    }
+    this.resetQuiz();
+  }
+
   resetQuiz() {
     this.quizList = [];
     this.selectedAnswersCounter = 0;
   }
   
   createQuiz() {
+    this.disabledQuizCreateBtn = true;
     this.apiService.getQuizList(this.selectedCategory, this.selectedDifficultyLevel, this.questionDisplayCount)
     .subscribe((response: QuizResponse) => {
       this.quizList = response.results.map((question: QuizResult)=>{
@@ -55,7 +64,7 @@ export class QuizMakerComponent implements OnInit {
   
   createAnswerList(question: QuizResult) {
     let displayAnswers = question.incorrect_answers; 
-    displayAnswers.splice(this.generateRandomIndex(), 0, question.correct_answer); // inserted on radom index
+    displayAnswers.splice(this.generateRandomIndex(4), 0, question.correct_answer); // inserted on random index
     question.answerDisplayed = [];
     for(let i=0; i < displayAnswers.length; i++) {
       question.answerDisplayed.push({answer: displayAnswers[i], isSelected: false, isAnswerCorrect: false });
@@ -63,8 +72,8 @@ export class QuizMakerComponent implements OnInit {
     return question
   }
 
-  generateRandomIndex() {
-    return Math.floor(3 * Math.random()); // get random index to insert
+  generateRandomIndex(lessThanIndex: number) {
+    return Math.floor(lessThanIndex * Math.random()); // get random index (less Than 4) to insert
   }
   
   selectAnswer(index: number, option: QuizAnswer, question: QuizResult) {
@@ -76,7 +85,6 @@ export class QuizMakerComponent implements OnInit {
           this.selectedAnswersCounter += 1; // Maintaining counter to show/hide Submit button
         }
       }
-      option.isAnswerCorrect = option.answer === question.correct_answer ?  true : false;
       option.isSelected = true;
       question.selectedAnswerIndex = index;
     }

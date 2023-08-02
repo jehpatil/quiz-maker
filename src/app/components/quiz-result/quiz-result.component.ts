@@ -32,9 +32,11 @@ export class QuizResultComponent implements OnInit {
       const question = this.quizList[i];
       if(question.answerDisplayed) {
         for(let j=0; j < question.answerDisplayed.length; j++) {
-          const answer = question.answerDisplayed[j];
-          if(answer.isAnswerCorrect) {
-            this.scored += 1
+          const item = question.answerDisplayed[j];
+          if(item.isSelected && item.answer === question.correct_answer) {
+            item.isAnswerCorrect = true;
+            this.scored += 1;
+            break;
           }
         }
       }
